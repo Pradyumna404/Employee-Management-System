@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Employee Management System</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background-color: #f4f4f4;
+		}
+
+		h2 {
+			text-align: center;
+			color: #333;
+		}
+
+		hr {
+			border: 0;
+			height: 1px;
+			background: #333;
+			margin: 20px 0;
+		}
+
+		.container {
+			width: 80%;
+			margin: auto;
+			padding: 20px;
+		}
+
+		.alert {
+			padding: 10px;
+			margin-bottom: 15px;
+			border-radius: 5px;
+		}
+
+		.alert-success {
+			background-color: #d4edda;
+			border-color: #c3e6cb;
+			color: #155724;
+		}
+
+		.alert-danger {
+			background-color: #f8d7da;
+			border-color: #f5c6cb;
+			color: #721c24;
+		}
+
+		#table {
+			width: 75%;
+			border-collapse: collapse;
+			margin-bottom: 20px;
+		}
+
+		th,
+		td {
+			border: 1px solid #ddd;
+			padding: 5px;
+			/* smaller padding */
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		form {
+			margin-bottom: 20px;
+		}
+
+		input[type="text"],
+		select {
+			padding: 8px;
+			width: 100%;
+			box-sizing: border-box;
+			margin-bottom: 10px;
+		}
+
+		input[type="submit"] {
+			padding: 8px 15px;
+			background-color: #007bff;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #0056b3;
+		}
+	</style>
+</head>
+
+<body>
+
+	<center>
+
+		<h2>Employee Management System</h2>
+		<hr color="red">
+		<div th:if="${successMessage}" class="alert alert-success" id="successMessage">
+			<p th:text="${successMessage}"></p>
+		</div>
+		<div th:if="${errorMessage}" class="alert alert-danger" id="errorMessage">
+			<p th:text="${errorMessage}"></p>
+		</div>
+		<form action="req2" method="post">
+			<table border="0">
+				<tr>
+					<td align="right">ID:</td>
+					<td><input type="text" name="id" value="0"></td>
+				</tr>
+				<tr>
+					<td align="right">Name:</td>
+					<td><input type="text" name="name"></td>
+				</tr>
+				<tr>
+					<td align="right">Phone Number:</td>
+					<td><input type="text" name="no"></td>
+				</tr>
+				<tr>
+					<td align="right">Gender:</td>
+					<td>
+						<select name="gender">
+							<option value="Male">Male</option>
+							<option value="Female">Female</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">Salary:</td>
+					<td><input type="text" name="salary" value="0"></td>
+				</tr>
+				<tr>
+					<td align="right">Role:</td>
+					<td>
+						<select name="role">
+							<option value="Admin">Admin</option>
+							<option value="Manager">Manager</option>
+							<option value="Employee">Employee</option>
+						</select>
+					</td>
+				</tr>
+
+				<td colspan="2" align="center">
+					<input type="submit" name="b1" value="Add Employee">
+					<input type="submit" name="b1" value="Update Employee">
+					<input type="submit" name="b1" value="Delete Employee">
+					<input type="submit" name="b1" value="Delete All Employees">
+
+				</td>
+				</tr>
+			</table>
+		</form>
+		<form action="/search" method="get">
+			<table >
+				<tr>
+					<td align="right">Search:</td>
+					<td><input type="text" name="keyword" placeholder="Search employees"></td>
+					<td><input type="submit" value="Search" name="t1"></td>
+				</tr>
+			</table>
+		</form>
+		<table  id="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Phone Number</th>
+					<th>Gender</th>
+					<th>Salary</th>
+					<th>Role</th>
+				</tr>
+			</thead>
+			<br><br><br><br>
+			<tbody>
+				<tr th:each="employee : ${employees}">
+					<td th:text="${employee.id}"></td>
+					<td th:text="${employee.name}"></td>
+					<td th:text="${employee.no}"></td>
+					<td th:text="${employee.gender}"></td>
+					<td th:text="${employee.salary}"></td>
+					<td th:text="${employee.role}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</center>
+	<script>
+		window.onload = function () {
+			setTimeout(function () {
+				var successMessage = document.getElementById('successMessage');
+				var errorMessage = document.getElementById('errorMessage');
+				if (successMessage) {
+					successMessage.style.display = 'none';
+				}
+				if (errorMessage) {
+					errorMessage.style.display = 'none';
+				}
+			}, 2000);
+		};
+	</script>
+</body>
+
+</html>
